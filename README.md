@@ -68,6 +68,67 @@ The Alpha: Convert your address to Hex manually before hitting the faucet.
 
 Proof: Check out the first-ever issue on the repo: GitHub Issue #1 => https://github.com/Solen-Blockchain/solen/issues/1
 
+# 7. Bonus Alpha: First Blood (Deploy Your First Contract)
+
+So your node is running and you want to leave a permanent mark on the Solen Testnet? 
+
+Let's deploy the standard Counter contract. But wait.. the official faucet is bugged (Issue #1), so how do you get gas money?
+
+Welcome to the trenches. Here is the manual workaround to fund your wallet and deploy your first WASM contract.
+
+/////// Step 1: The Faucet Hex Hack ///////
+
+
+Since the faucet backend reads strings as ASCII, we bypass the frontend and send our raw 32-byte Hex address directly via API.
+
+First, convert your Base58 address to Hex (use Python or any online converter). Then, hit the faucet API directly:
+
+```
+curl -i -X POST https://testnet-faucet.solenchain.io/drip \
+  -H "Content-Type: application/json" \
+  -d "{\"account\": \"YOUR_64_CHAR_HEX_ADDRESS_HERE\"}"
+```
+Check your balance: ```./target/release/solen --network testnet balance <your_key_name>``` (You should see 150000000000).
+
+/////// Step 2: Build the Contract ///////
+
+
+Compile the example Rust contract to WASM:
+
+```
+rustup target add wasm32-unknown-unknown
+cd examples/contracts/counter
+cargo build --target wasm32-unknown-unknown --release
+cd ../../..
+```
+
+/////// Step 3: Deploy & Interact ///////
+
+
+Fire it onto the network:
+
+```
+./target/release/solen --network testnet deploy <your_key_name> examples/contracts/counter/target/wasm32-unknown-unknown/release/solen_example_counter.wasm
+```
+
+Save the ```Contract ID``` it gives you!
+
+Now, increment the counter (costs gas):
+
+```
+./target/release/solen --network testnet call <your_key_name> <CONTRACT_ID> increment
+```
+
+Read the counter value for free (RPC View Call):
+
+```
+curl -s -X POST https://testnet-rpc.solenchain.io \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","method":"solen_callView","params":["<CONTRACT_ID>","get"],"id":1}'
+```
+
+Look at the ```"return_data"``` in the output. ```0100...``` means 1, ```0200...``` means 2 (Little-Endian hex). Congrats, you are now a Solen smart contract developer!
+
 ___________________________
 
 Stay hungry, stay building. If this guide saved your node, drop a star on the repo. See you on the mainnet!
