@@ -129,6 +129,39 @@ curl -s -X POST https://testnet-rpc.solenchain.io \
 
 Look at the ```"return_data"``` in the output. ```0100...``` means 1, ```0200...``` means 2 (Little-Endian hex). Congrats, you are now a Solen smart contract developer!
 
+# Becoming an Active Validator
+
+Once your node is fully synced and you see ```state verified``` in your logs, you can move from being a passive observer to an active guardian of the Solen Network.
+
+/////// Step 1: Check Your Balance ///////
+
+Ensure you have the required 15,000 SOLEN tokens (thanks to the recent governance update).
+
+```
+./target/release/solen --network testnet balance <YOUR-NODE-NAME>
+```
+
+/////// Step 2: Register via Management Script ///////
+
+Open the manager and select Option 12 (Register as validator).
+
+Key Name: ```<YOUR-NODE-NAME>```
+
+Stake Amount: ```15000```
+
+/////// Step 3: Verification ///////
+
+After the "Validator registered successfully" message, check the official Explorer. Your address should now appear under the Active Validators list.
+
+Technical Note:
+As an active validator, your node is now part of the BFT (Byzantine Fault Tolerance) quorum. You can monitor your participation in the live logs (Option 8). Look for ```block finalized with quorum.``` This confirms your node is signing and securing the chain!
+
+# Pro-Tip:
+
+If you encounter libz-sys or zlib build errors during the installation on Ubuntu/Debian, run sudo apt-get install zlib1g-dev before building the source. This ensures the Rust compiler can correctly link the compression libraries needed for RocksDB storage.
+
+Don't worry if your Block Count stays at zero for a while. With 15k stake against 100M total stake, your probability of being a block proposer is low, but your node is still actively validating and finalizing every single block behind the scenes. Check your logs for ```finalized with quorum``` to confirm your active participation!
+
 ___________________________
 
 Stay hungry, stay building. If this guide saved your node, drop a star on the repo. See you on the mainnet!
