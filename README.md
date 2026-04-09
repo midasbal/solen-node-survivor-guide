@@ -1,5 +1,13 @@
 > **Update:** Check out our official Bug Report on Solen Main Repo: [Issue #1](https://github.com/Solen-Blockchain/solen/issues/1) 🐞
 
+# 🚨 CRITICAL UPDATE: Proceed with Caution 🚨
+
+We jumped into Solen early because we’re suckers for new tech, but the vibe shifted fast. The team decided to pull a ICO speedrun without delivering a single product or significant update. In the crypto world, that’s a massive red flag. 🚩
+
+My confidence in the project’s transparency is currently at zero. I'm keeping this guide here for the tech-curious and those who want to play with the node for learning purposes, but **DO YOUR OWN RESEARCH (DYOR)** before putting any real capital into this. Don't let the FOMO get you rekt. Stay safe.
+
+---
+
 If you're here, you're probably trying to spin up a Solen node and realized the P2P mesh is acting a bit... let's say "unstable." Don't worry, we've been through the trenches.
 
 This guide is for the Chads who want their node up and running while everyone else is stuck at waiting for P2P mesh.
